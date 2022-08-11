@@ -84,13 +84,13 @@ void ros_node::spin()
         this->message_imu.header.stamp = ros::Time::now();
         this->message_imu.header.frame_id = "mpu9250";
         // Set accelerations (convert from g's to m/s^2)
-        this->message_imu.linear_acceleration.x = static_cast<double>( this->imu_datadata.accel_x) * 9.80665;
-        this->message_imu.linear_acceleration.y = static_cast<double>( this->imu_datadata.accel_y) * 9.80665;
-        this->message_imu.linear_acceleration.z = static_cast<double>( this->imu_datadata.accel_z) * 9.80665;
+        this->message_imu.linear_acceleration.x = static_cast<double>( this->imu_data.accel_x) * 9.80665;
+        this->message_imu.linear_acceleration.y = static_cast<double>( this->imu_data.accel_y) * 9.80665;
+        this->message_imu.linear_acceleration.z = static_cast<double>( this->imu_data.accel_z) * 9.80665;
         // Set rotation rates (convert from deg/sec to rad/sec)
-        this->message_imu.angular_velocity.x = static_cast<double>( this->imu_datadata.gyro_x) * M_PI / 180.0;
-        this->message_imu.angular_velocity.y = static_cast<double>( this->imu_datadata.gyro_y) * M_PI / 180.0;
-        this->message_imu.angular_velocity.z = static_cast<double>( this->imu_datadata.gyro_z) * M_PI / 180.0;
+        this->message_imu.angular_velocity.x = static_cast<double>( this->imu_data.gyro_x) * M_PI / 180.0;
+        this->message_imu.angular_velocity.y = static_cast<double>( this->imu_data.gyro_y) * M_PI / 180.0;
+        this->message_imu.angular_velocity.z = static_cast<double>( this->imu_data.gyro_z) * M_PI / 180.0;
         // Publish IMU message.
         ros_node::m_publisher_imu.publish(this->message_imu);
 
