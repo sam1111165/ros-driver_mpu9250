@@ -10,7 +10,7 @@
 ///
 class driver
 {
-public:
+public: 
     // ENUMERATIONS
     ///
     /// \brief Enumerates the digital low-pass filter (DLPF) cutoff frequencies for the accelerometers.
