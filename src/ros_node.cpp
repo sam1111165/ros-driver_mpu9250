@@ -113,7 +113,7 @@ void ros_node::deinitialize_driver()
     }
 }
 
-//無用
+
 void ros_node::data_callback(driver::data data)
 {
     this->imu_data=data;

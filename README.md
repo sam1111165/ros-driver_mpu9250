@@ -52,7 +52,7 @@ A Raspberry Pi driver for MPU9250.  Ensure that the pigpio daemon is running bef
 
 
 #### Published Topics
-* **`imu/imu`** ([sensor_msgs/Imu](http://docs.ros.org/api/sensor_msgs/html/msg/Imu.html))
+* **`/imu_9250`** ([sensor_msgs/Imu](http://docs.ros.org/api/sensor_msgs/html/msg/Imu.html))
         The acceleration and gyroscope measurements from the MPU9250.
 * **`imu/magneto`** ([sensor_msgs/MagneticField](http://docs.ros.org/api/sensor_msgs/html/msg/MagneticField.html))
         The magnetic field measurements from the onboard AK8963 compass.
