@@ -73,7 +73,7 @@ void ros_node::spin()
 {
     // Spin.
     ros::spin();
-
+     ROS_INFO_STREAM("test");
     // Deinitialize driver.
     ros_node::deinitialize_driver();
 }
@@ -116,27 +116,27 @@ void ros_node::data_callback(driver::data data)
     // Publish IMU message.
     ros_node::m_publisher_imu.publish(message_imu);
 
-    // Check if there was a magneto overflow.
-    if(isnan(data.magneto_x) == false)
-    {
-        // Create magneto message.
-        sensor_msgs::MagneticField message_mag;
-        message_mag.header = message_imu.header;
-        // Fill magnetic field strengths (convert from uT to T)
-        message_mag.magnetic_field.x = static_cast<double>(data.magneto_x) * 0.000001;
-        message_mag.magnetic_field.y = static_cast<double>(data.magneto_y) * 0.000001;
-        message_mag.magnetic_field.z = static_cast<double>(data.magneto_z) * 0.000001;
-        // Leave covariance matrices at zero.
+    // // Check if there was a magneto overflow.
+    // if(isnan(data.magneto_x) == false)
+    // {
+    //     // Create magneto message.
+    //     sensor_msgs::MagneticField message_mag;
+    //     message_mag.header = message_imu.header;
+    //     // Fill magnetic field strengths (convert from uT to T)
+    //     message_mag.magnetic_field.x = static_cast<double>(data.magneto_x) * 0.000001;
+    //     message_mag.magnetic_field.y = static_cast<double>(data.magneto_y) * 0.000001;
+    //     message_mag.magnetic_field.z = static_cast<double>(data.magneto_z) * 0.000001;
+    //     // Leave covariance matrices at zero.
 
-        // Publish magneto message.
-        ros_node::m_publisher_mag.publish(message_mag);
-    }
+    //     // Publish magneto message.
+    //     ros_node::m_publisher_mag.publish(message_mag);
+    // }
 
-    // Create temperature message.
-    sensor_msgs::Temperature message_temp;
-    message_temp.header = message_imu.header;
-    message_temp.temperature = static_cast<double>(data.temp);
-    message_temp.variance = 0.0;
-    // Publish temperature message.
-    ros_node::m_publisher_temp.publish(message_temp);
+    // // Create temperature message.
+    // sensor_msgs::Temperature message_temp;
+    // message_temp.header = message_imu.header;
+    // message_temp.temperature = static_cast<double>(data.temp);
+    // message_temp.variance = 0.0;
+    // // Publish temperature message.
+    // ros_node::m_publisher_temp.publish(message_temp);
 }
