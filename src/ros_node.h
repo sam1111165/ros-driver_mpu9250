@@ -4,7 +4,7 @@
 #define ROS_NODE_H
 
 #include "driver.h"
-
+#include <sensor_msgs/Imu.h>
 #include <ros/ros.h>
 
 ///
