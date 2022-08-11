@@ -39,7 +39,7 @@ ros_node::ros_node(driver *driver, int argc, char **argv)
 
 
     // Set up publishers.
-    ros_node::m_publisher_imu = ros_node::m_node->advertise<sensor_msgs::Imu>("imu/imu", 1);
+    ros_node::m_publisher_imu = ros_node::m_node->advertise<sensor_msgs::Imu>("imu_9250", 1);
     ros_node::m_publisher_mag = ros_node::m_node->advertise<sensor_msgs::MagneticField>("imu/magneto", 1);
     ros_node::m_publisher_temp = ros_node::m_node->advertise<sensor_msgs::Temperature>("imu/temperature", 1);
 
