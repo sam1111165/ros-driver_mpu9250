@@ -30,8 +30,8 @@ The driver_mpu9250 package has been tested under [ROS] Melodic and Ubuntu 18.04.
 To build from source, clone the latest version from this repository into your catkin workspace and compile the package using
 
         cd catkin_workspace/src
-        git clone https://github.com/pcdangio/ros-driver_mpu9250.git driver_mpu9250
-        cd ../
+        git clone https://github.com/sam1111165/ros-driver_mpu9250.git driver_mpu9250
+        cd ..
         catkin_make
 
 ## Usage
