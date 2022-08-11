@@ -78,10 +78,12 @@ void ros_node::spin()
 {
     // Spin.
     // ros::spin();
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(this->data_rate);
     while(ros::ok()){
         // Publish IMU message.
         ros_node::m_publisher_imu.publish(this->message_imu);
+        
+        loop_rate.sleep();
     }
     // Deinitialize driver.
     ros_node::deinitialize_driver();
