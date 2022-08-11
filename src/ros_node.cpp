@@ -33,6 +33,10 @@ ros_node::ros_node(driver *driver, int argc, char **argv)
     private_node.param<int>("gyro_fsr", param_gyro_fsr, 0);
     int param_accel_fsr;
     private_node.param<int>("accel_fsr", param_accel_fsr, 0);
+    int param_data_rate;
+    private_node.param<int>("data_rate", param_data_rate, 100);
+    this->data_rate=param_data_rate;
+
 
     // Set up publishers.
     ros_node::m_publisher_imu = ros_node::m_node->advertise<sensor_msgs::Imu>("imu/imu", 1);
@@ -52,6 +56,7 @@ ros_node::ros_node(driver *driver, int argc, char **argv)
         ros_node::m_driver->p_accel_fsr(static_cast<driver::accel_fsr_type>(param_accel_fsr));
 
         ROS_INFO_STREAM("MPU9250 driver successfully initialized on I2C bus " << param_i2c_bus << " at address 0x" << std::hex << param_i2c_address << ".");
+        ROS_INFO_STREAM("date_rater = "<<param_data_rate<<" hz");
     }
     catch (std::exception& e)
     {
@@ -73,8 +78,10 @@ void ros_node::spin()
 {
     // Spin.
     // ros::spin();
+    ros::Rate loop_rate(10);
     while(ros::ok()){
-         ROS_INFO_STREAM("ok");
+        // Publish IMU message.
+        ros_node::m_publisher_imu.publish(this->message_imu);
     }
     // Deinitialize driver.
     ros_node::deinitialize_driver();
@@ -116,7 +123,7 @@ void ros_node::data_callback(driver::data data)
     this->message_imu.angular_velocity.z = static_cast<double>(data.gyro_z) * M_PI / 180.0;
     // Leave covariance matrices at zero.
     // Publish IMU message.
-    ros_node::m_publisher_imu.publish(this->message_imu);
+    // ros_node::m_publisher_imu.publish(this->message_imu);
 
     // // Check if there was a magneto overflow.
     // if(isnan(data.magneto_x) == false)
