@@ -52,10 +52,9 @@ private:
     /// \brief m_publisher_temp The publisher for Temperature messages.
     ///
     ros::Publisher m_publisher_temp;
-    ///
-    /// \brief data_rate
-    ///
+
     int data_rate;
+    driver::data imu_data;
 
     // METHODS
     ///

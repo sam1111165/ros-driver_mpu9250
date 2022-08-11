@@ -80,9 +80,20 @@ void ros_node::spin()
     // ros::spin();
     ros::Rate loop_rate(this->data_rate);
     while(ros::ok()){
+
+        this->message_imu.header.stamp = ros::Time::now();
+        this->message_imu.header.frame_id = "mpu9250";
+        // Set accelerations (convert from g's to m/s^2)
+        this->message_imu.linear_acceleration.x = static_cast<double>( this->imu_datadata.accel_x) * 9.80665;
+        this->message_imu.linear_acceleration.y = static_cast<double>( this->imu_datadata.accel_y) * 9.80665;
+        this->message_imu.linear_acceleration.z = static_cast<double>( this->imu_datadata.accel_z) * 9.80665;
+        // Set rotation rates (convert from deg/sec to rad/sec)
+        this->message_imu.angular_velocity.x = static_cast<double>( this->imu_datadata.gyro_x) * M_PI / 180.0;
+        this->message_imu.angular_velocity.y = static_cast<double>( this->imu_datadata.gyro_y) * M_PI / 180.0;
+        this->message_imu.angular_velocity.z = static_cast<double>( this->imu_datadata.gyro_z) * M_PI / 180.0;
         // Publish IMU message.
         ros_node::m_publisher_imu.publish(this->message_imu);
-        
+
         loop_rate.sleep();
     }
     // Deinitialize driver.
@@ -102,27 +113,29 @@ void ros_node::deinitialize_driver()
     }
 }
 
+//無用
 void ros_node::data_callback(driver::data data)
 {
+    this->imu_data=data;
     // Create IMU message.
     
-    this->message_imu.header.stamp = ros::Time::now();
-    this->message_imu.header.frame_id = "mpu9250";
-    // Set blank orientation.
-    this->message_imu.orientation.w = std::numeric_limits<double>::quiet_NaN();
-    this->message_imu.orientation.x = std::numeric_limits<double>::quiet_NaN();
-    this->message_imu.orientation.y = std::numeric_limits<double>::quiet_NaN();
-    this->message_imu.orientation.z = std::numeric_limits<double>::quiet_NaN();
-    // Covariances of -1 indicate orientation not calculated.
-    this->message_imu.orientation_covariance.fill(-1.0);
-    // Set accelerations (convert from g's to m/s^2)
-    this->message_imu.linear_acceleration.x = static_cast<double>(data.accel_x) * 9.80665;
-    this->message_imu.linear_acceleration.y = static_cast<double>(data.accel_y) * 9.80665;
-    this->message_imu.linear_acceleration.z = static_cast<double>(data.accel_z) * 9.80665;
-    // Set rotation rates (convert from deg/sec to rad/sec)
-    this->message_imu.angular_velocity.x = static_cast<double>(data.gyro_x) * M_PI / 180.0;
-    this->message_imu.angular_velocity.y = static_cast<double>(data.gyro_y) * M_PI / 180.0;
-    this->message_imu.angular_velocity.z = static_cast<double>(data.gyro_z) * M_PI / 180.0;
+    // this->message_imu.header.stamp = ros::Time::now();
+    // this->message_imu.header.frame_id = "mpu9250";
+    // // Set blank orientation.
+    // this->message_imu.orientation.w = std::numeric_limits<double>::quiet_NaN();
+    // this->message_imu.orientation.x = std::numeric_limits<double>::quiet_NaN();
+    // this->message_imu.orientation.y = std::numeric_limits<double>::quiet_NaN();
+    // this->message_imu.orientation.z = std::numeric_limits<double>::quiet_NaN();
+    // // Covariances of -1 indicate orientation not calculated.
+    // this->message_imu.orientation_covariance.fill(-1.0);
+    // // Set accelerations (convert from g's to m/s^2)
+    // this->message_imu.linear_acceleration.x = static_cast<double>(data.accel_x) * 9.80665;
+    // this->message_imu.linear_acceleration.y = static_cast<double>(data.accel_y) * 9.80665;
+    // this->message_imu.linear_acceleration.z = static_cast<double>(data.accel_z) * 9.80665;
+    // // Set rotation rates (convert from deg/sec to rad/sec)
+    // this->message_imu.angular_velocity.x = static_cast<double>(data.gyro_x) * M_PI / 180.0;
+    // this->message_imu.angular_velocity.y = static_cast<double>(data.gyro_y) * M_PI / 180.0;
+    // this->message_imu.angular_velocity.z = static_cast<double>(data.gyro_z) * M_PI / 180.0;
     // Leave covariance matrices at zero.
     // Publish IMU message.
     // ros_node::m_publisher_imu.publish(this->message_imu);
