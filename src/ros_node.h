@@ -20,6 +20,7 @@ public:
     /// \param argc Number of main() args.
     /// \param argv The main() args.
     ///
+    sensor_msgs::Imu message_imu;
     ros_node(driver* driver, int argc, char **argv);
     ~ros_node();
 

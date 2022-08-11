@@ -72,8 +72,10 @@ ros_node::~ros_node()
 void ros_node::spin()
 {
     // Spin.
-    ros::spin();
-    ROS_INFO_STREAM("test");
+    // ros::spin();
+    while(ros::ok()){
+         ROS_INFO_STREAM("ok")
+    }
     // Deinitialize driver.
     ros_node::deinitialize_driver();
 }
@@ -94,27 +96,27 @@ void ros_node::deinitialize_driver()
 void ros_node::data_callback(driver::data data)
 {
     // Create IMU message.
-    sensor_msgs::Imu message_imu;
-    message_imu.header.stamp = ros::Time::now();
-    message_imu.header.frame_id = "mpu9250";
+    
+    this->message_imu.header.stamp = ros::Time::now();
+    this->message_imu.header.frame_id = "mpu9250";
     // Set blank orientation.
-    message_imu.orientation.w = std::numeric_limits<double>::quiet_NaN();
-    message_imu.orientation.x = std::numeric_limits<double>::quiet_NaN();
-    message_imu.orientation.y = std::numeric_limits<double>::quiet_NaN();
-    message_imu.orientation.z = std::numeric_limits<double>::quiet_NaN();
+    this->message_imu.orientation.w = std::numeric_limits<double>::quiet_NaN();
+    this->message_imu.orientation.x = std::numeric_limits<double>::quiet_NaN();
+    this->message_imu.orientation.y = std::numeric_limits<double>::quiet_NaN();
+    this->message_imu.orientation.z = std::numeric_limits<double>::quiet_NaN();
     // Covariances of -1 indicate orientation not calculated.
-    message_imu.orientation_covariance.fill(-1.0);
+    this->message_imu.orientation_covariance.fill(-1.0);
     // Set accelerations (convert from g's to m/s^2)
-    message_imu.linear_acceleration.x = static_cast<double>(data.accel_x) * 9.80665;
-    message_imu.linear_acceleration.y = static_cast<double>(data.accel_y) * 9.80665;
-    message_imu.linear_acceleration.z = static_cast<double>(data.accel_z) * 9.80665;
+    this->message_imu.linear_acceleration.x = static_cast<double>(data.accel_x) * 9.80665;
+    this->message_imu.linear_acceleration.y = static_cast<double>(data.accel_y) * 9.80665;
+    this->message_imu.linear_acceleration.z = static_cast<double>(data.accel_z) * 9.80665;
     // Set rotation rates (convert from deg/sec to rad/sec)
-    message_imu.angular_velocity.x = static_cast<double>(data.gyro_x) * M_PI / 180.0;
-    message_imu.angular_velocity.y = static_cast<double>(data.gyro_y) * M_PI / 180.0;
-    message_imu.angular_velocity.z = static_cast<double>(data.gyro_z) * M_PI / 180.0;
+    this->message_imu.angular_velocity.x = static_cast<double>(data.gyro_x) * M_PI / 180.0;
+    this->message_imu.angular_velocity.y = static_cast<double>(data.gyro_y) * M_PI / 180.0;
+    this->message_imu.angular_velocity.z = static_cast<double>(data.gyro_z) * M_PI / 180.0;
     // Leave covariance matrices at zero.
     // Publish IMU message.
-    ros_node::m_publisher_imu.publish(message_imu);
+    ros_node::m_publisher_imu.publish(this->message_imu);
 
     // // Check if there was a magneto overflow.
     // if(isnan(data.magneto_x) == false)
