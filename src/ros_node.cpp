@@ -74,7 +74,7 @@ void ros_node::spin()
     // Spin.
     // ros::spin();
     while(ros::ok()){
-         ROS_INFO_STREAM("ok")
+         ROS_INFO_STREAM("ok");
     }
     // Deinitialize driver.
     ros_node::deinitialize_driver();
