@@ -73,7 +73,7 @@ void ros_node::spin()
 {
     // Spin.
     ros::spin();
-     ROS_INFO_STREAM("test");
+    ROS_INFO_STREAM("test");
     // Deinitialize driver.
     ros_node::deinitialize_driver();
 }
