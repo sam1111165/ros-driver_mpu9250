@@ -35,14 +35,9 @@ To build from source, clone the latest version from this repository into your ca
         catkin_make
 
 ## Usage
+sudo pigpiod
 
-Run any of the driver nodes with (where xxx is the driver type):
-
-        rosrun driver_mpu9250 xxx_node
-
-For example, to run the node using a driver for a Raspberry Pi:
-
-        rosrun driver_mpu9250 rpi_node
+rosrun driver_mpu9250 rpi_node _interrupt_gpio_pin:=17
 
 ## Nodes
 
